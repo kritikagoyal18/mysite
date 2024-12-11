@@ -1,5 +1,12 @@
 {
   "project": "mysite",
   "pushDownSelector": "header",
-  "plugins": []
+  "plugins": [
+    {
+      "id": "addPage",
+      "title": "Add Page",
+      "environments": ["edit","preview","live"],
+      "url": "/tools/sidekick/library.html"
+    }
+  ]
 }
