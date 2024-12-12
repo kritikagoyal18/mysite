@@ -4,7 +4,7 @@
   "plugins": [
     {
       "id": "addPage",
-      "title": "Add Page",
+      "title": "Add Page Here",
       "environments": ["preview","live"],
       "event": "foo"
     }
