@@ -1,4 +1,4 @@
-async function fetchAndRenderFstab(url) {
+/*async function fetchAndRenderFstab(url) {
   try {
     const response = await fetch(url);
     console.log('response is ', response);
@@ -16,6 +16,10 @@ async function fetchAndRenderFstab(url) {
     document.getElementById("fstab-content").textContent =
       "Failed to load fstab.yaml file.";
   }
+}*/
+
+function fetchAndRenderFstab(url) {
+  alert('url is ', url);
 }
 
 function renderFstabToHTML(data) {
