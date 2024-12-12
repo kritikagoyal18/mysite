@@ -6,7 +6,8 @@
       "id": "addPage",
       "title": "Add Page",
       "environments": ["preview","live"],
-      "url": "/tools/sidekick/foo.html"
+      "url": "/tools/sidekick/foo-palette.html",
+      "isPalette": true
     }
   ]
 }
