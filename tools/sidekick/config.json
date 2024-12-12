@@ -7,7 +7,8 @@
       "title": "Add Page",
       "environments": ["preview","live"],
       "url": "/tools/sidekick/foo-palette.html",
-      "isPalette": true
+      "isPalette": true,
+      "paletteRect": "top:150px;left:7%;height:675px;width:85vw;"
     }
   ]
 }
