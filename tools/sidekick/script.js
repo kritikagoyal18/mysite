@@ -1,6 +1,7 @@
 async function fetchAndRenderFstab(url) {
   try {
     const response = await fetch(url);
+    console.log('response is ', response);
     if (!response.ok) {
       throw new Error(`Failed to fetch fstab.yaml: ${response.statusText}`);
     }
