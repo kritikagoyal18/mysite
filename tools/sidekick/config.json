@@ -6,7 +6,7 @@
       "id": "addPage",
       "title": "Add Page",
       "environments": ["preview","live"],
-      "event": "foo"
+      "url": "/tools/sidekick/foo.html"
     }
   ]
 }
