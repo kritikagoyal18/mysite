@@ -19,6 +19,7 @@
 }*/
 
 function fetchAndRenderFstab(url) {
+  console.log('url is ', url);
   alert('url is ', url);
 }
 
