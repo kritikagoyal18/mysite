@@ -1,5 +1,3 @@
-import { sp } from "@pnp/sp";
-
 async function fetchFolderHierarchy() {
   try {
     const libraryPath = 'https://drive.google.com/drive/folders/1I5OPtzRgSRdRE9qEG2sXeownbAkwUJbO';
