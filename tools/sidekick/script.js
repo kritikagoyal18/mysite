@@ -30,5 +30,5 @@ function renderFstabToHTML(data) {
   }
 }
 
-const fstabUrl = "../fstab.yaml";
+const fstabUrl = "../../fstab.yaml";
 fetchAndRenderFstab(fstabUrl);
