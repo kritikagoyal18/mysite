@@ -1,39 +1,7 @@
-/*async function fetchAndRenderFstab(url) {
-  try {
-    const response = await fetch(url);
-    console.log('response is ', response);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch fstab.yaml: ${response.statusText}`);
-    }
-
-    const yamlContent = await response.text();
-
-    const parsedData = jsyaml.load(yamlContent);
-
-    renderFstabToHTML(parsedData);
-  } catch (error) {
-    console.error("Error fetching and rendering fstab.yaml:", error);
-    document.getElementById("fstab-content").textContent =
-      "Failed to load fstab.yaml file.";
-  }
-}*/
-
-function fetchAndRenderFstab(url) {
-  console.log('url is ', url);
-  alert('url is ', url);
+function renderFolderStructure() {
+  const spUrl = 'https://drive.google.com/drive/folders/1I5OPtzRgSRdRE9qEG2sXeownbAkwUJbO';
+  console.log('url is ', spUrl);
+  // Logic to load the folder structure of this URL
 }
 
-function renderFstabToHTML(data) {
-  const container = document.getElementById("fstab-content");
-
-  container.innerHTML = "";
-
-  for (const [key, value] of Object.entries(data)) {
-    const section = document.createElement("div");
-    section.innerHTML = `<strong>${key}:</strong> ${value.url}`;
-    container.appendChild(section);
-  }
-}
-
-const fstabUrl = "../../fstab.yaml";
-fetchAndRenderFstab(fstabUrl);
+renderFolderStructure();
