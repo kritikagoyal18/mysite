@@ -10,5 +10,14 @@
 <body>
   <h3>fstab.yaml Content</h3>
   <div id="fstab-content">Loading...</div>
+  <script>
+    // Access PnP.js directly from the global `pnp` object
+    const sp = pnp.sp;
+
+    // Example: Fetch SharePoint web title
+    sp.web.get().then((web) => {
+      console.log("Web Title:", web.Title);
+    });
+  </script>
 </body>
 </html>
