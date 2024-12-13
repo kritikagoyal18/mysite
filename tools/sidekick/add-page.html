@@ -8,15 +8,13 @@
 </head>
 <body>
   <h1>Google Drive Folder Structure</h1>
-  <button id="authorize-button">Authorize</button>
   <ul id="folder-structure"></ul>
 
   <script>
     const SCOPES = "https://www.googleapis.com/auth/drive.metadata.readonly";
     const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-    const contentUrl = 'https://drive.google.com/drive/folders/1I5OPtzRgSRdRE9qEG2sXeownbAkwUJbO';
+    const contentUrl = 'https://drive.google.com/drive/folders/1I5OPtzRgSRdRE9qEG2sXeownbAkwUJbO'; // Example folder URL
 
-    const authorizeButton = document.getElementById("authorize-button");
     const folderStructure = document.getElementById("folder-structure");
 
     function getFolderIdFromUrl(url) {
@@ -34,31 +32,56 @@
         scope: SCOPES,
       }).then(() => {
         const authInstance = gapi.auth2.getAuthInstance();
+        const isSignedIn = authInstance.isSignedIn.get();
 
-        // Listen for sign-in state changes
-        authInstance.isSignedIn.listen(updateSigninStatus);
-
-        // Update the UI based on the current sign-in state
-        updateSigninStatus(authInstance.isSignedIn.get());
-
-        authorizeButton.onclick = () => authInstance.signIn();
+        if (isSignedIn) {
+          // Fetch folder contents if the user is already authenticated
+          const folderId = getFolderIdFromUrl(contentUrl);
+          if (folderId) {
+            fetchFolderContents(folderId);
+          } else {
+            console.error("Invalid folder URL.");
+          }
+        } else {
+          console.log("User is not signed in to Google.");
+          // Attempt to fetch without explicit sign-in
+          attemptFetchWithSession();
+        }
       }).catch((error) => {
         console.error("Error initializing GAPI client:", error);
       });
     }
 
-    function updateSigninStatus(isSignedIn) {
-      if (isSignedIn) {
-        authorizeButton.style.display = "none";
-        const folderId = getFolderIdFromUrl(contentUrl);
-        if (folderId) {
-          fetchFolderContents(folderId);
-        } else {
-          console.error("Invalid folder URL.");
-        }
-      } else {
-        authorizeButton.style.display = "block";
+    function attemptFetchWithSession() {
+      // Attempting to use an existing Google session to fetch data
+      const folderId = getFolderIdFromUrl(contentUrl);
+      if (!folderId) {
+        console.error("Invalid folder URL.");
+        return;
       }
+
+      fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+trashed=false&fields=files(id,name,mimeType)`, {
+        credentials: "include", // Use credentials from the user's browser session
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch folder contents: ${response.statusText}`);
+        }
+        return response.json();
+      }).then((data) => {
+        const files = data.files;
+        folderStructure.innerHTML = "";
+        if (files && files.length > 0) {
+          files.forEach((file) => {
+            const li = document.createElement("li");
+            li.textContent = `${file.name} (${file.mimeType === "application/vnd.google-apps.folder" ? "Folder" : "File"})`;
+            folderStructure.appendChild(li);
+          });
+        } else {
+          folderStructure.innerHTML = "<li>No files found in this folder.</li>";
+        }
+      }).catch((error) => {
+        console.error("Error fetching folder contents:", error);
+      });
     }
 
     function fetchFolderContents(folderId) {
